@@ -65,22 +65,13 @@ export function Contact() {
     setErrorMessage("");
 
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const data = await res.json();
-
-      if (!res.ok || !data.ok) {
-        throw new Error(data.error ?? "Something went wrong. Please try again.");
-      }
-
+      // Front-end only portfolio: do not call the backend API.
+      await new Promise((resolve) => setTimeout(resolve, 600));
       setStatus("success");
       setForm(initialState);
-    } catch (err) {
+    } catch {
       setStatus("error");
-      setErrorMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+      setErrorMessage("Something went wrong. Please try again.");
     }
   }
 
@@ -296,7 +287,6 @@ export function Contact() {
                     />
                   </Field>
 
-                  {/* Honeypot field, hidden from real users */}
                   <input
                     type="text"
                     name="company_website"
@@ -319,7 +309,7 @@ export function Contact() {
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 px-7 py-3.5 text-sm font-semibold text-white transition-transform hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 px-7 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {status === "submitting" ? (
                     <>
